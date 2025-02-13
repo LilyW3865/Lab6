@@ -15,7 +15,7 @@ public class DesertScene : MonoBehaviour
     {
         //InitalizeVariables();
         CreateGround();
-        //CreateRandomForest();
+        CreateRandomForest();
         CreatePyramid();
 
 
@@ -36,24 +36,27 @@ public class DesertScene : MonoBehaviour
         renderer.material = new Material(Shader.Find("Standard"));
         renderer.material.color = Color.green;
     }
-    /* void CreateRandomForest()
+    
+    void CreateRandomForest()
     {
-        GameObject testParent = new GameObject("TestParent");
+        GameObject RandomCube = new GameObject("Randomcube");
 
         for (int i = 0; i < 4; i++)
         {
-            GameObject test = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            test.transform.parent = testParent.transform;
-            test.transform.position = new Vector3(i * 2, 0, 0);
+            GameObject randomcube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            randomcube.GetComponent<Renderer>().material.color = Color.green;
+            randomcube.transform.parent = randomcube.transform;
+            randomcube.transform.position = new Vector3(i * 2, 0, 0);
+
+            float scaleX = UnityEngine.Random.Range(0.5f, 2.0f);
+            float scaleY = UnityEngine.Random.Range(0.5f, 2.0f);
+            float scaleZ = UnityEngine.Random.Range(0.5f, 2.0f);
+            randomcube.transform.localScale = new Vector3(scaleX, scaleY, scaleZ);
         }
 
-        float scaleX = UnityEngine.Random.Range(0.5f, 2.0f);
-        float scaleY = UnityEngine.Random.Range(0.5f, 2.0f);
-        float scaleZ = UnityEngine.Random.Range(0.5f, 2.0f);
-        // test.transform.localScale = new Vector3(scaleX, scaleY, scaleZ);
 
     }
-    */
+    
     void CreatePyramid()
 
     {
