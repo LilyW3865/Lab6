@@ -81,6 +81,31 @@ public class DesertScene : MonoBehaviour
                         pyramidBaseHeight + y * spacing, //keep cubes above plane level           
                         z * spacing - zOffset //adjusts forward and back (along z axis)
                     );
+
+                    if(cubesInLayer == 5)
+                    {
+                        cube.GetComponent<Renderer>().material.color = Color.black;
+                    }
+
+                    if(cubesInLayer == 4)
+                    {
+                        cube.GetComponent<Renderer>().material.color = Color.white;
+                    }
+
+                    if(cubesInLayer == 3)
+                    {
+                        cube.GetComponent<Renderer>().material.color = Color.red;
+                    }
+
+                    if(cubesInLayer == 2)
+                    {
+                        cube.GetComponent<Renderer>().material.color = Color.blue;
+                    }
+
+                    if(cubesInLayer == 1)
+                    {
+                        cube.GetComponent<Renderer>().material.color = Color.green;
+                    }
                 }
             }
         }
