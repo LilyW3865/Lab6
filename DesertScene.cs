@@ -1,6 +1,7 @@
 using System.IO.IsolatedStorage;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 
 public class DesertScene : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class DesertScene : MonoBehaviour
     public GameObject[] trees;
     public GameObject[] stones;
     public int pyramidSize = 5;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -17,9 +19,6 @@ public class DesertScene : MonoBehaviour
         CreateGround();
         CreateRandomForest();
         CreatePyramid();
-
-
-
     }
 
     /*void InitalizeVariables()
@@ -36,27 +35,36 @@ public class DesertScene : MonoBehaviour
         renderer.material = new Material(Shader.Find("Standard"));
         renderer.material.color = Color.green;
     }
-    
     void CreateRandomForest()
     {
-        GameObject RandomCube = new GameObject("Randomcube");
+        GameObject cylinderParent = new GameObject("CylinderParent");
 
-        for (int i = 0; i < 4; i++)
+        //creates rows and columns of trees (x and z axis)
+        int rowsofForest = 5;
+        int columnsofForest = 5;
+
+        for (int x = 0; x < rowsofForest; x++)
         {
-            GameObject randomcube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            randomcube.GetComponent<Renderer>().material.color = Color.green;
-            randomcube.transform.parent = randomcube.transform;
-            randomcube.transform.position = new Vector3(i * 2, 0, 0);
+            for (int z = 0; z < columnsofForest; z++)
+            {
+                GameObject randomcylinder = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+                randomcylinder.transform.parent = cylinderParent.transform;
+                randomcylinder.GetComponent<Renderer>().material.color = Color.green;
+                randomcylinder.transform.parent = randomcylinder.transform;
 
-            float scaleX = UnityEngine.Random.Range(0.5f, 2.0f);
-            float scaleY = UnityEngine.Random.Range(0.5f, 2.0f);
-            float scaleZ = UnityEngine.Random.Range(0.5f, 2.0f);
-            randomcube.transform.localScale = new Vector3(scaleX, scaleY, scaleZ);
+                //randomize scale and position of trees
+                float scaleX = UnityEngine.Random.Range(0.1f, 2.0f);
+                float scaleY = UnityEngine.Random.Range(0.5f, 2.0f);
+                float scaleZ = UnityEngine.Random.Range(0.1f, 2.0f);
+                randomcylinder.transform.localScale = new Vector3(scaleX, scaleY, scaleZ);
+                float positionX = UnityEngine.Random.Range(2.0f, 7.0f);
+                float positionZ = UnityEngine.Random.Range(-2.0f, 7.0f);
+                randomcylinder.transform.position = new Vector3(positionX, scaleY, positionZ);//keeps y value from falling through plane
+
+            }
         }
 
-
     }
-    
     void CreatePyramid()
 
     {
@@ -64,7 +72,7 @@ public class DesertScene : MonoBehaviour
         float cubeSize = 1.0f;
         float spacing = 1.1f;
         float pyramidBaseHeight = cubeSize / 2; //keep cubes above the plane
-        float xShift = 5.0f; //shifts pyramid slightly to right for room for forest
+        float xShift = -2.0f; //shifts pyramid slightly to right for room for forest
 
         for (int y = 0; y < pyramidSize; y++)
         {
@@ -80,32 +88,31 @@ public class DesertScene : MonoBehaviour
                     float zOffset = (cubesInLayer - 1) * 0.5f * spacing; //for centering cubes along z axis
 
                     cube.transform.position = new Vector3(
-                        x * spacing - xOffset, //adjusts lef and right (along x axis)
+                        x * spacing - xOffset + xShift, //adjusts lef and right (along x axis)
                         pyramidBaseHeight + y * spacing, //keep cubes above plane level           
                         z * spacing - zOffset //adjusts forward and back (along z axis)
                     );
-
-                    if(cubesInLayer == 5)
+                    if (cubesInLayer == 5)
                     {
                         cube.GetComponent<Renderer>().material.color = Color.black;
                     }
 
-                    if(cubesInLayer == 4)
+                    if (cubesInLayer == 4)
                     {
                         cube.GetComponent<Renderer>().material.color = Color.white;
                     }
 
-                    if(cubesInLayer == 3)
+                    if (cubesInLayer == 3)
                     {
                         cube.GetComponent<Renderer>().material.color = Color.red;
                     }
 
-                    if(cubesInLayer == 2)
+                    if (cubesInLayer == 2)
                     {
                         cube.GetComponent<Renderer>().material.color = Color.blue;
                     }
 
-                    if(cubesInLayer == 1)
+                    if (cubesInLayer == 1)
                     {
                         cube.GetComponent<Renderer>().material.color = Color.green;
                     }
