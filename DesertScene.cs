@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.IO.IsolatedStorage;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -5,26 +6,27 @@ using UnityEngine.UIElements;
 
 public class DesertScene : MonoBehaviour
 {
-
-    public int sizeofforest;
-    public int stonesRequired;
-    public GameObject[] trees;
-    public GameObject[] stones;
-    public int pyramidSize = 5;
-
+    public GameObject[,] forestGrid;
+    public int rowsofForest;
+    public int columnsofForest;
+    public int pyramidSize;
+ 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //InitalizeVariables();
+        InitializeVariables();
         CreateGround();
         CreateRandomForest();
         CreatePyramid();
     }
 
-    /*void InitalizeVariables()
+    void InitializeVariables()
     {
-        GameObject cubeParent = new GameObject("CubeParent");
-    }*/
+        rowsofForest = 5;//initializes rows of trees (x axis)
+        columnsofForest = 5;//initializes columns of trees (z axis)
+        forestGrid = new GameObject[rowsofForest, columnsofForest];//initializes 2D array for trees
+        pyramidSize = 5;//initializes size of a pyramid row
+    }
 
     void CreateGround()
     {
@@ -39,9 +41,6 @@ public class DesertScene : MonoBehaviour
     {
         GameObject cylinderParent = new GameObject("CylinderParent");
 
-        //creates rows and columns of trees (x and z axis)
-        int rowsofForest = 5;
-        int columnsofForest = 5;
 
         for (int x = 0; x < rowsofForest; x++)
         {
@@ -60,6 +59,8 @@ public class DesertScene : MonoBehaviour
                 float positionX = UnityEngine.Random.Range(2.0f, 7.0f);
                 float positionZ = UnityEngine.Random.Range(-2.0f, 7.0f);
                 randomcylinder.transform.position = new Vector3(positionX, scaleY, positionZ);//keeps y value from falling through plane
+
+                forestGrid[x, z] = randomcylinder;//stores cylinder trees into 2D array
 
             }
         }
@@ -119,13 +120,7 @@ public class DesertScene : MonoBehaviour
                 }
             }
         }
-        /*
-                  for (int i = 0; i < 4; i++)
-        {
-            GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            cube.transform.parent = cubeParent.transform;
-            cube.transform.position = new Vector3(i * 2, 0, 0);
-        }*/
+
     }
 
     // Update is called once per frame
